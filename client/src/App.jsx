@@ -1,10 +1,12 @@
 import React from 'react'
-import Navbar from './components/navbar'
-import CenterPart from './components/CenterPart'
+import Navbar from './components/navbar/Navbar'
+import CenterPart from './components/centerPart/CenterPart'
+
+
 
 const App = () => {
   return (
-    <div className='mix-h-[100vh] '>
+    <div >
       <Navbar/>
       <CenterPart/>
     </div>
