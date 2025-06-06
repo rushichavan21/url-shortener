@@ -7,12 +7,14 @@ const Navbar = () => {
       <div className="navbar-container">
         <div className="navbar-left">
           <div className="navbar-brand">
+            
+            <span className="logo-url"><img src="./logo-url.svg" alt="" /></span>
             <span className="brand-text">Url Shortner</span>
           </div>
           <div className="navbar-links">
-            <a href="#">Community</a>
-            <a href="#">Teams</a>
+            <a href="#">contact us</a>
             <a href="#">Learn</a>
+            <a href="#">Learn how this works?</a> 
           </div>
         </div>
         <div className="navbar-right">

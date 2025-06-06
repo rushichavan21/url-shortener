@@ -1,41 +1,63 @@
 import './centerPart.css';
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Toaster, toast } from 'react-hot-toast';
 
 const CenterPart = () => {
   const [longUrl, setLongUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
   const [copied, setCopied] = useState(false);
 
+  const isValidUrl = (string) => {
+    const pattern = /^(https?:\/\/)?([\w\-]+\.)+[\w]{2,}(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/i;
+    return pattern.test(string.trim());
+  };
+
+  const showToast = (message, type = "default") => {
+    toast(message, {
+      icon: type === "success" ? "✅" : type === "error" ? "❌" : "👏",
+      style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+      },
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!longUrl.trim()) return;
 
-    console.log("Shortening URL:", longUrl);
+    if (!isValidUrl(longUrl)) {
+      showToast("Please enter a valid URL!", "error");
+      return;
+    }
 
     try {
+      const formattedUrl = longUrl.startsWith('http') ? longUrl : 'https://' + longUrl;
       const response = await axios.post('http://localhost:3000/api/generate-id', {
-        url: longUrl,
+        url: formattedUrl,
       });
-      setShortUrl(response.data);
-      console.log("Shortened URL:", response.data);
 
+      setShortUrl(response.data);
+      showToast("Shortened URL generated!", "success");
     } catch (error) {
       console.error("Error shortening URL:", error);
+      showToast("Something went wrong. Please try again.", "error");
     }
   };
 
   return (
     <section className="center-section">
+      {/* 🔥 Hot Toast Container */}
+      <Toaster position="bottom-left" />
+
       <div className="center-container">
-        <h1 className="center-heading">
-          Shrink it. Share it. Simplify it.
-        </h1>
+        <h1 className="center-heading">Shrink it. Share it. Simplify it.</h1>
         <p className="center-subtext">
           Shorten your websites, track clicks, and create custom URLs with ease.
         </p>
 
-        {/* Form starts here */}
         <form className="input-box" onSubmit={handleSubmit}>
           <input
             type="text"
@@ -44,7 +66,6 @@ const CenterPart = () => {
             value={longUrl}
             onChange={(e) => setLongUrl(e.target.value)}
           />
-
           <button type="submit" className="arrow-button">
             <svg
               className="arrow-icon"
@@ -57,25 +78,26 @@ const CenterPart = () => {
             </svg>
           </button>
         </form>
-       {shortUrl && (
-  <div className={`short-url-box show`}>
-    <p className="short-url-text">
-      Your shortened URL:{" "}
-      <a href={shortUrl} target="_blank" rel="noopener noreferrer">{shortUrl}</a>
-    </p>
-    <button
-      className={`copy-button ${copied ? 'copied' : ''}`}
-      onClick={() => {
-        navigator.clipboard.writeText(shortUrl);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 1500);
-      }}
-    >
-      {copied ? "Copied!" : "Copy"}
-    </button>
-  </div>
-)}
 
+        {shortUrl && (
+          <div className="short-url-box show">
+            <p className="short-url-text">
+              Your shortened URL:{" "}
+              <a href={shortUrl} target="_blank" rel="noopener noreferrer">{shortUrl}</a>
+            </p>
+            <button
+              className={`copy-button ${copied ? 'copied' : ''}`}
+              onClick={() => {
+                navigator.clipboard.writeText(shortUrl);
+                setCopied(true);
+                showToast("Copied to clipboard!", "success");
+                setTimeout(() => setCopied(false), 1500);
+              }}
+            >
+              {copied ? "Copied!" : "Copy"}
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

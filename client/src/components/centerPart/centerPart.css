@@ -4,27 +4,31 @@
   align-items: center;
   justify-content: center;
   padding: 1rem;
+
+
   background: linear-gradient(to bottom, #0d0d0dc1 10%, #0d0d0dc1 70%, #202030 80%, #e6491982 100%);
   position: relative;
   color: white;
   text-align: center;
+
 
 }
 
 .center-container {
   max-width: 42rem;
   width: 100%;
+  
 }
 
 .center-heading {
-  font-size: 2.25rem; /* 36px */
+  font-size: 2rem; /* 36px */
   font-weight: bold;
   margin-bottom: 1rem;
 }
 
 @media (min-width: 768px) {
   .center-heading {
-    font-size: 3rem; /* 48px */
+    font-size: 2.5rem; /* 48px */
   }
 }
 
