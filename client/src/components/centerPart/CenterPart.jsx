@@ -1,7 +1,7 @@
 import './centerPart.css';
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Toaster, toast } from 'react-hot-toast';
+import { getShortUrl } from '../../api/shortUrl.api';
 
 const CenterPart = () => {
   const [longUrl, setLongUrl] = useState("");
@@ -15,7 +15,7 @@ const CenterPart = () => {
 
   const showToast = (message, type = "default") => {
     toast(message, {
-      icon: type === "success" ? "✅" : type === "error" ? "❌" : "👏",
+      icon: type === "success" ? "✅" : type === "error" ? "❌" : "ℹ️",
       style: {
         borderRadius: '10px',
         background: '#333',
@@ -35,21 +35,18 @@ const CenterPart = () => {
 
     try {
       const formattedUrl = longUrl.startsWith('http') ? longUrl : 'https://' + longUrl;
-      const response = await axios.post('http://localhost:3000/api/generate-id', {
-        url: formattedUrl,
-      });
-
-      setShortUrl(response.data);
+      const {shortUrl} =await getShortUrl(formattedUrl);
+    
+      setShortUrl(shortUrl);
       showToast("Shortened URL generated!", "success");
     } catch (error) {
-      console.error("Error shortening URL:", error);
-      showToast("Something went wrong. Please try again.", "error");
+      showToast(error.message || "Something went wrong. Please try again.", "error");
     }
   };
 
   return (
     <section className="center-section">
-      {/* 🔥 Hot Toast Container */}
+
       <Toaster position="bottom-left" />
 
       <div className="center-container">
