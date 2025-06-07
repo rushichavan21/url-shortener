@@ -8,7 +8,7 @@ export const shortUrlController = async (req, res) => {
 
   try {
     const shortUrl =await shortUrlserviceWithOutUser(url);
-    res.send(process.env.APP_URL + shortUrl );
+    res.status(200).json({shortUrl : process.env.APP_URL + shortUrl });
   } catch (error) {
     console.error('Error saving URL:', error);
     res.status(500).json({ error: 'Internal Server Error' });
