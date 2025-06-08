@@ -8,7 +8,7 @@ const urlSchema = new mongoose.Schema({
   shortUrl: {
     type: String,
     required: true,
-    index:true,
+    index: true,
     unique: true,
   },
   createdAt: {
@@ -22,7 +22,7 @@ const urlSchema = new mongoose.Schema({
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+    ref: "User",
   },
 });
 
