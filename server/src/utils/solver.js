@@ -32,7 +32,8 @@ export const signToken = async (userId) => {
 
 export const verifyToken = async (token) => {
   try {
-    return await jwt.verify(token, process.env.JWT_SECRET);
+    const decoded=await jwt.verify(token, process.env.JWT_SECRET);
+    return decoded;
   } catch (error) {
     console.error('Error verifying token:', error);
     throw new Error('Invalid token');
