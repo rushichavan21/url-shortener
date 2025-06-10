@@ -1,22 +1,16 @@
-import React from 'react'
-import Navbar from './components/navbar/Navbar'
-import CenterPart from './components/centerPart/CenterPart'
-import Landingpage from './pages/landingpage/Landingpage'
-import LoginPage from './pages/Login/LoginPage'
-import SignupPage from './pages/signup/signupPage'
+
+  import { Outlet } from '@tanstack/react-router'
 
 
 
 
 
-const App = () => {
-  return (
-    <div >
-   {/* <Landingpage/> */}
-   {/* <LoginPage/> */}
-   <SignupPage/>
-    </div>
-  )
-}
+  const App = () => {
+    return (
+      <div >
+    <Outlet/>
+      </div>
+    )
+  }
 
-export default App
+  export default App
