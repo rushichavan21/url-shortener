@@ -108,6 +108,12 @@
   border-radius: 50%;
   object-fit: cover;
 }
+.navbar-email{
+  color: rgba(255, 255, 255, 0.801);
+}
+@media (max-width: 528px) {
+ .navbar-email{display: none;} 
+}
 
 @media (max-width: 400px) {
   .navbar-container{
