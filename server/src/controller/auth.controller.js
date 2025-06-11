@@ -8,39 +8,44 @@ export const login = async (req, res) => {
   }
 
   try {
-    const token = await loginUser(email, password);
+    const response= await loginUser(email, password);
 
-    res.cookie("token", token, {
+    res.cookie("token", response.token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
     });
-    res.status(200).json({ token });
+    res.status(200).json({response});
   } catch (error) {
     console.error("Login error:", error.message);
     res.status(401).json({ error: error.message || "Login failed" });
   }
 };
 
-export const register = async (req, res) => {
-  const { username, email, password } = req.body;
 
+
+export const register = async (req, res) => {
+  const {  email, password } = req.body;
+   const username="hell"
   if (!username || !email || !password) {
-    return res
-      .status(400)
-      .json({ error: "Username, email, and password are required" });
+    return res.status(400).json({
+      error: "Username, email, and password are required"
+    });
   }
 
   try {
-    const token = await registerUser({ username, email, password });
+    const { token, user } = await registerUser({ username, email, password });
+
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
     });
-    res.status(201).json({ token });
+
+    res.status(201).json({ user,token });
   } catch (error) {
-    console.error("Registration error:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error("Registration error:", error.message);
+    const status = error.status || 500;
+    res.status(status).json({ error: error.message || "Registration failed" });
   }
 };
