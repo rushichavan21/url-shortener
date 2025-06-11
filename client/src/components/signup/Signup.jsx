@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, Lock, Mail, AlertCircle, User } from 'lucide-react';
 import './signup.css';
+import { signup } from '../../api/auth.api';
+import { Toaster, toast } from 'react-hot-toast';
+import { useNavigate } from '@tanstack/react-router';
 export default function Signup() {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -14,46 +17,29 @@ export default function Signup() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
-
-  const validateEmail = (email) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  };
+const navigate = useNavigate();
 
   const validateForm = () => {
     const newErrors = {};
     
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = 'First name is required';
-    }
     
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = 'Last name is required';
-    }
     
     if (!formData.email) {
       newErrors.email = 'Email is required';
-    } else if (!validateEmail(formData.email)) {
-      newErrors.email = 'Please enter a valid email';
-    }
+    } 
     
     if (!formData.password) {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 8) {
       newErrors.password = 'Password must be at least 8 characters';
-    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
-      newErrors.password = 'Password must contain uppercase, lowercase, and number';
-    }
+    } 
     
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = 'Please confirm your password';
     } else if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match';
     }
-    
-    if (!acceptTerms) {
-      newErrors.terms = 'You must accept the terms and conditions';
-    }
+
     
     return newErrors;
   };
@@ -73,27 +59,41 @@ export default function Signup() {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const newErrors = validateForm();
-    
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-    
-    setIsLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      alert(`Account created successfully! Welcome ${formData.firstName}!`);
-    }, 2000);
-  };
+ 
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const newErrors = validateForm();
+  if (Object.keys(newErrors).length > 0) {
+    setErrors(newErrors);
+    return;
+  }
+
+  setIsLoading(true);
+
+  try {
+    const response = await signup(formData.email, formData.password);
+    console.log(response);
+    toast.success("Signup successful!");
+  } catch (error) {
+    const message =
+      error?.response?.data?.message ||
+      error?.message ||
+      "Signup failed. Please try again.";
+    toast.error(message,{style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+      },});
+      navigate({ to: '/dashboard' });
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <>
-
+    
       <div className="signup-container">
         {/* Background decoration */}
         <div className="signup-bg-decoration">
@@ -176,9 +176,6 @@ export default function Signup() {
                     {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                   </button>
                 </div>
-                <div className="signup-password-strength">
-                  Must contain at least 8 characters with uppercase, lowercase, and number
-                </div>
                 {errors.password && (
                   <p className="signup-error-message">
                     <AlertCircle className="w-4 h-4" />
@@ -221,29 +218,8 @@ export default function Signup() {
                 )}
               </div>
 
-              {/* Terms and Conditions */}
-              <div className="signup-field">
-                <label className="signup-terms">
-                  <input
-                    type="checkbox"
-                    className="signup-checkbox"
-                    checked={acceptTerms}
-                    onChange={(e) => setAcceptTerms(e.target.checked)}
-                  />
-                  <span className="signup-terms-text">
-                    I agree to the{' '}
-                    <a href="#" className="signup-terms-link">Terms of Service</a>
-                    {' '}and{' '}
-                    <a href="#" className="signup-terms-link">Privacy Policy</a>
-                  </span>
-                </label>
-                {errors.terms && (
-                  <p className="signup-error-message">
-                    <AlertCircle className="w-4 h-4" />
-                    {errors.terms}
-                  </p>
-                )}
-              </div>
+      
+              
 
               {/* Submit Button */}
               <button
@@ -283,13 +259,14 @@ export default function Signup() {
             {/* Login Link */}
             <p className="signup-login">
               Already have an account?{' '}
-              <button className="signup-login-link">
+              <button className="signup-login-link" onClick={() => navigate({ to: '/auth/login' })}>
                 Sign in here
               </button>
             </p>
           </div>
         </div>
       </div>
+       <Toaster position="bottom-left" reverseOrder={false} />
     </>
   );
 }

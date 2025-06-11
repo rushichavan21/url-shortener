@@ -1,6 +1,9 @@
+import { Toaster,toast } from 'react-hot-toast';
 import React, { useState } from 'react';
 import { Eye, EyeOff, Lock, Mail, AlertCircle } from 'lucide-react';
 import './login.css';
+import { loginReq } from '../../api/auth.api';
+import { useNavigate } from '@tanstack/react-router';
 export default function LoginPage() {
   const [formData, setFormData] = useState({
     email: '',
@@ -9,21 +12,12 @@ export default function LoginPage() {
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  const validateEmail = (email) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  };
-
-  const validateForm = () => {
+ const navigate = useNavigate();
+ const validateForm = () => {
     const newErrors = {};
-    
     if (!formData.email) {
       newErrors.email = 'Email is required';
-    } else if (!validateEmail(formData.email)) {
-      newErrors.email = 'Please enter a valid email';
-    }
-    
+    } 
     if (!formData.password) {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 6) {
@@ -40,7 +34,6 @@ export default function LoginPage() {
       [name]: value
     }));
     
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -49,23 +42,48 @@ export default function LoginPage() {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const newErrors = validateForm();
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const newErrors = validateForm();
+  if (Object.keys(newErrors).length > 0) {
+    setErrors(newErrors);
+    return;
+  }
+
+  setIsLoading(true);
+
+  try {
+    const response = await loginReq(formData.email, formData.password);
+    console.log(response);
     
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-    
-    setIsLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      alert(`Login successful! Email: ${formData.email}`);
-    }, 1500);
-  };
+    // Optional: check response if it contains a custom status or message
+    toast.success("Login successful!",{
+      style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+      },
+    });
+    navigate({ to: '/dashboard' });
+    // You can redirect or store token here as needed
+  } catch (error) {
+    const message =
+      error?.response?.data?.message ||
+      error?.message ||
+      'Login failed. Please try again.';
+    setErrors({ general: message });
+    toast.error(message,{style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+      }});
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   return (
     <>
@@ -158,20 +176,6 @@ export default function LoginPage() {
                 )}
               </div>
 
-              {/* Remember Me & Forgot Password */}
-              <div className="login-options">
-                <label className="login-remember">
-                  <input
-                    type="checkbox"
-                    className="login-checkbox"
-                  />
-                  <span>Remember me</span>
-                </label>
-                <button className="login-forgot">
-                  Forgot password?
-                </button>
-              </div>
-
               {/* Submit Button */}
               <button
                 onClick={handleSubmit}
@@ -205,24 +209,19 @@ export default function LoginPage() {
                 <span>Continue as a Guest</span>
               </button>
               
-              {/* <button className="login-social-btn">
-                <svg className="login-social-icon w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-                <span>Facebook</span>
-              </button> */}
             </div>
 
             {/* Sign Up Link */}
             <p className="login-signup">
               Don't have an account?{' '}
-              <button className="login-signup-link">
+              <button className="login-signup-link" onClick={() => navigate({ to: '/auth/signup' })}>
                 Sign up here
               </button>
             </p>
           </div>
         </div>
       </div>
+        <Toaster position="bottom-left" />
     </>
   );
 }
