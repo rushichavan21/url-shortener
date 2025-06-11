@@ -1,0 +1,13 @@
+.dashboard-page-wrapper{
+     min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+
+
+  background: linear-gradient(to bottom, #0d0d0dc1 10%, #0d0d0dc1 70%, #202030 80%, #e6491982 100%);
+  position: relative;
+  color: white;
+  text-align: center;
+}
