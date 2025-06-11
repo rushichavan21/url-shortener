@@ -58,7 +58,6 @@ const handleSubmit = async (e) => {
     const response = await loginReq(formData.email, formData.password);
     console.log(response);
     
-    // Optional: check response if it contains a custom status or message
     toast.success("Login successful!",{
       style: {
         borderRadius: '10px',
@@ -66,8 +65,17 @@ const handleSubmit = async (e) => {
         color: '#fff',
       },
     });
+      const user = response?.data?.response?.user;
+
+  if (user?.token) {
+    localStorage.setItem("token", user.token);
+    localStorage.setItem("user", JSON.stringify(user));
+    console.log("User logged in:", user);
     navigate({ to: '/dashboard' });
-    // You can redirect or store token here as needed
+  } else {
+    console.warn("Login failed or missing token");
+  }
+
   } catch (error) {
     const message =
       error?.response?.data?.message ||
@@ -204,12 +212,21 @@ const handleSubmit = async (e) => {
             </div>
 
             {/* Social Login */}
-            <div className="login-social">
-              <button className="login-social-btn">
-                <span>Continue as a Guest</span>
-              </button>
-              
-            </div>
+         <div className="login-social">
+  <button
+    className="login-social-btn"
+    onClick={() => {
+      setFormData({
+        email: "rushichavan2327@gmail.com",
+        password: "12345678"
+      });
+      handleSubmit({ preventDefault: () => {} });
+    }}
+  >
+    <span>Continue as a Guest</span>
+  </button>
+</div>
+
 
             {/* Sign Up Link */}
             <p className="login-signup">

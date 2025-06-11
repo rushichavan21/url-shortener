@@ -75,6 +75,16 @@ const handleSubmit = async (e) => {
     const response = await signup(formData.email, formData.password);
     console.log(response);
     toast.success("Signup successful!");
+    const user = response?.data?.user;
+    const token = response?.data?.token;
+  if (token) {
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
+    console.log("User logged in:", user);
+    navigate({ to: '/dashboard' });
+  } else {
+    console.warn("Login failed or missing token");
+  }
   } catch (error) {
     const message =
       error?.response?.data?.message ||
@@ -85,7 +95,6 @@ const handleSubmit = async (e) => {
         background: '#333',
         color: '#fff',
       },});
-      navigate({ to: '/dashboard' });
   } finally {
     setIsLoading(false);
   }
@@ -250,8 +259,7 @@ const handleSubmit = async (e) => {
 
             {/* Social Signup */}
             <div className="signup-social">
-              <button className="signup-social-btn">
-
+              <button className="signup-social-btn" onClick={()=>navigate({ to: '/auth/login' })}>
                 <span>Continue As a Guest</span>
               </button>
             </div>

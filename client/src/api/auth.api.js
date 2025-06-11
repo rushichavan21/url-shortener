@@ -4,19 +4,7 @@ export const loginReq = async (email, password) => {
     email,
     password,
   });
-
-  const user = response?.data?.response?.user;
-
-  if (user?.token) {
-    localStorage.setItem("token", user.token);
-    localStorage.setItem("user", JSON.stringify(user));
-    console.log("User logged in:", user);
-
-  } else {
-    console.warn("Login failed or missing token");
-  }
-
-  return response.data;
+  return response;
 };
 
 
@@ -25,15 +13,5 @@ export const signup= async (email, password) => {
     email: email,
     password: password,
   });
-   const user = response?.data?.response?.user;
-
-  if (user?.token) {
-    localStorage.setItem("token", user.token);
-    localStorage.setItem("user", JSON.stringify(user));
-    console.log("User logged in:", user);
-  } else {
-    console.warn("Login failed: token or user missing");
-  }
-
-  return response.data;
+  return response;
 }
