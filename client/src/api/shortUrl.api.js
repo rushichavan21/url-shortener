@@ -33,3 +33,14 @@ export const getShortUrlCustom = async (url, customId, token) => {
   console.log("Response from getShortUrlCustom:", response.data);
   return response.data;
 }
+
+export const fetchAllUrls = async (token) => {
+  const response = await axiosInstance.get("/api/viewall", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  console.log("Response from viewAll:", response.data);
+  return response.data;
+};
+

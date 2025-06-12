@@ -6,7 +6,7 @@ dotenv.config("./.env");
 import connectToMongo from "./src/config/mongo.config.js";
 import shortUrlRouter from "./src/routes/shortUrl.route.js";
 import authRouter from "./src/routes/auth.route.js";
-import getAllRouter from "./src/routes/getAll.route.js "
+import getAllRouter from "./src/routes/getAll.route.js"
 const app = express();
 app.use(cors());
 app.use(express.json());
