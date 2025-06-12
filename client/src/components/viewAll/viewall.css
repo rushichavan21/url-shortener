@@ -2,10 +2,34 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1rem;
-  padding: 1rem;
+  /* padding: 1rem; */
   background-color: rgba(0, 0, 0, 0.474);
 }
 
 .viewall-wrapper{
-    margin-top: 3rem;
+    margin-top: 5rem;
+}
+.viewall-para{
+  text-align: center;
+  margin-top:7rem;
+}
+
+.error-message {
+  color: #f87171;
+  text-align: center;
+  padding: 1rem;
+}
+
+.retry-button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.retry-button:hover {
+  background-color: #2563eb;
 }

@@ -11,6 +11,7 @@
           padding: 2rem;
           transition: all 0.3s ease;
           backdrop-filter: blur(10px);
+          z-index: 100;
         }
 
         .card-wrapper:hover {
