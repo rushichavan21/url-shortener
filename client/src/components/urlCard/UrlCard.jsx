@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Copy, Check, ExternalLink, Calendar } from 'lucide-react';
 const baseURL=import.meta.env.VITE_BACKEND_URL || "http://localhost:3000/";
-import "./UrlCard.css"
+import "./urlCard.css"
 const    UrlCard = ({ data }) => {
   const [copied, setCopied] = useState(false);
 
