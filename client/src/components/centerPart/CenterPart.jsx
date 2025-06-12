@@ -1,18 +1,19 @@
 import './centerPart.css';
 import React, { useState } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
-import { getShortUrl } from '../../api/shortUrl.api';
-
+import { getShortUrl, getShortUrlWithUser } from '../../api/shortUrl.api';
+import { useAuthContext } from '../../hooks/useAuthContextHook';
 const CenterPart = () => {
   const [longUrl, setLongUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
   const [copied, setCopied] = useState(false);
-
+  const { user } = useAuthContext();
+  console.log("User in CenterPart:", user);
   const isValidUrl = (string) => {
     const pattern = /^(https?:\/\/)?([\w\-]+\.)+[\w]{2,}(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/i;
     return pattern.test(string.trim());
   };
-
+ 
   const showToast = (message, type = "default") => {
     toast(message, {
       icon: type === "success" ? "✅" : type === "error" ? "❌" : "ℹ️",
@@ -35,8 +36,13 @@ const CenterPart = () => {
 
     try {
       const formattedUrl = longUrl.startsWith('http') ? longUrl : 'https://' + longUrl;
-      const {shortUrl} =await getShortUrl(formattedUrl);
-    
+      let shortUrl;
+      if(user){
+        shortUrl =await getShortUrlWithUser(formattedUrl, user?.token);
+      }else{
+
+        shortUrl =await getShortUrl(formattedUrl);
+      }
       setShortUrl(shortUrl);
       showToast("Shortened URL generated!", "success");
     } catch (error) {
