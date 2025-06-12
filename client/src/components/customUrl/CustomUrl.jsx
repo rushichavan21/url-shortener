@@ -1,11 +1,11 @@
 import '../centerPart/centerPart.css';
 import React, { useState } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
-import { getShortUrl, getShortUrlCustom } from '../../api/shortUrl.api';
+import {  getShortUrlCustom } from '../../api/shortUrl.api';
 import { useAuthContext } from '../../hooks/useAuthContextHook';
 const CustomUrl = () => {
   const [longUrl, setLongUrl] = useState("");
-  const [customName, setCustomName] = useState(""); // ✅ new state
+  const [customName, setCustomName] = useState(""); 
   const [shortUrl, setShortUrl] = useState("");
   const [copied, setCopied] = useState(false);
  const { user } = useAuthContext();
@@ -25,26 +25,35 @@ const CustomUrl = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!longUrl.trim()) return;
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!longUrl.trim()) return;
 
-    if (!isValidUrl(longUrl)) {
-      showToast("Please enter a valid URL!", "error");
-      return;
-    }
+  if (!isValidUrl(longUrl)) {
+    showToast("Please enter a valid URL!", "error");
+    return;
+  }
 
-    try {
-      const formattedUrl = longUrl.startsWith('http') ? longUrl : 'https://' + longUrl;
-      const response  = await getShortUrlCustom(formattedUrl,customName,user?.token); // ✅ pass custom name if API supports it
 
-      setShortUrl(response);
-      console.log("Shortened URL:", shortUrl);
-      showToast("Shortened URL generated!", "success");
-    } catch (error) {
-      showToast(error.message || "Something went wrong. Please try again.", "error");
-    }
-  };
+  const disallowedPattern = /[^a-zA-Z0-9_-]/;
+  if (customName && disallowedPattern.test(customName)) {
+    showToast("Custom name can only contain letters, numbers, hyphens (-), and underscores (_).", "error");
+    return;
+  }
+
+  try {
+    const formattedUrl = longUrl.startsWith('http') ? longUrl : 'https://' + longUrl;
+    const response = await getShortUrlCustom(formattedUrl, customName, user?.token);
+
+    setShortUrl(response.shortUrl); 
+    console.log("Shortened URL:", response.shortUrl );
+    showToast("Shortened URL generated!", "success");
+  } catch (error) {
+     const errMsg = error.response?.data?.message || error.message || "Something went wrong. Please try again.";
+  showToast(errMsg, "error");
+  }
+};
+
 
   return (
     <section className="center-section">

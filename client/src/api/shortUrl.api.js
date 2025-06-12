@@ -3,7 +3,7 @@ export const getShortUrl = async (url) => {
   const response=await axiosInstance.post("/api/generate-id", {
     url: url,
   });
-    return response.data.shortUrl;
+    return response.data;
 }
 
 export const getShortUrlWithUser = async (url, token) => {
@@ -17,7 +17,7 @@ export const getShortUrlWithUser = async (url, token) => {
     }
   );
   console.log("Response from getShortUrlWithUser:", response.data.shortUrl);
-  return response.data.shortUrl
+  return response.data
 };
 
 export const getShortUrlCustom = async (url, customId, token) => {
@@ -31,5 +31,5 @@ export const getShortUrlCustom = async (url, customId, token) => {
     }
   );
   console.log("Response from getShortUrlCustom:", response.data);
-  return response.data.shortUrl;
+  return response.data;
 }

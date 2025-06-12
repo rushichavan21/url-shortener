@@ -4,7 +4,6 @@ import { nanoid } from "nanoid";
 import dotenv from "dotenv";
 dotenv.config("./.env");
 import connectToMongo from "./src/config/mongo.config.js";
-import url_Schema from "./src/models/url.model.js";
 import shortUrlRouter from "./src/routes/shortUrl.route.js";
 import authRouter from "./src/routes/auth.route.js";
 const app = express();

@@ -1,4 +1,4 @@
-import { saveShortUrl } from "../dao/shortUrl.dao.js";
+import { saveCustomShortUrl, saveShortUrl } from "../dao/shortUrl.dao.js";
 import { generateNanoId } from "../utils/solver.js";
 
 
@@ -17,6 +17,6 @@ return shortUrl;
 export const shortUrlserviceCustom =async(url,user,customId)=>{
  let shortUrl = await generateNanoId(0);
  shortUrl=shortUrl+customId; 
- await  saveShortUrl(shortUrl,url,user);
+ await  saveCustomShortUrl(shortUrl,url,user);
 return shortUrl;
 }

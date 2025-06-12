@@ -39,8 +39,8 @@ const Navbar = () => {
         <div className="navbar-right">
           {!isDashboard ? (
             <>
-              <button className="btn login-btn" onClick={() => navigate({ to: '/auth/login' })}>Log in</button>
-              <button className="btn signup-btn" onClick={() => navigate({ to: '/auth/signup' })}>Sign up</button>
+              <button className="btn signup-btn" onClick={() => navigate({ to: '/auth/login' })}>Log in</button>
+              <button className="btn login-btn" onClick={() => navigate({ to: '/auth/signup' })}>Sign up</button>
             </>
           ) : (
             <span>

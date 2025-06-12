@@ -97,17 +97,13 @@ const handleSubmit = async (e) => {
     <>
 
       <div className="login-container">
-        {/* Background decoration */}
         <div className="login-bg-decoration">
           <div className="login-bg-circle login-bg-circle-1"></div>
           <div className="login-bg-circle login-bg-circle-2"></div>
           <div className="login-bg-circle login-bg-circle-3"></div>
         </div>
-
-        {/* Login Card */}
         <div className="login-card-wrapper">
           <div className="login-card">
-            {/* Header */}
             <div className="login-header">
               <div className="login-icon-wrapper">
                 <Lock className="w-8 h-8 text-white" />
@@ -116,9 +112,9 @@ const handleSubmit = async (e) => {
               <p className="login-subtitle">Sign in to your account</p>
             </div>
 
-            {/* Form */}
+
             <div className="login-form">
-              {/* Email Field */}
+
               <div className="login-field">
                 <label htmlFor="email" className="login-label">
                   Email Address
@@ -149,8 +145,6 @@ const handleSubmit = async (e) => {
                   </p>
                 )}
               </div>
-
-              {/* Password Field */}
               <div className="login-field">
                 <label htmlFor="password" className="login-label">
                   Password
@@ -183,8 +177,6 @@ const handleSubmit = async (e) => {
                   </p>
                 )}
               </div>
-
-              {/* Submit Button */}
               <button
                 onClick={handleSubmit}
                 disabled={isLoading}
@@ -200,8 +192,6 @@ const handleSubmit = async (e) => {
                 )}
               </button>
             </div>
-
-            {/* Divider */}
             <div className="login-divider">
               <div className="login-divider-line">
                 <div className="login-divider-border"></div>
@@ -210,8 +200,6 @@ const handleSubmit = async (e) => {
                 <span>Or continue with</span>
               </div>
             </div>
-
-            {/* Social Login */}
          <div className="login-social">
   <button
     className="login-social-btn"
@@ -226,9 +214,6 @@ const handleSubmit = async (e) => {
     <span>Continue as a Guest</span>
   </button>
 </div>
-
-
-            {/* Sign Up Link */}
             <p className="login-signup">
               Don't have an account?{' '}
               <button className="login-signup-link" onClick={() => navigate({ to: '/auth/signup' })}>

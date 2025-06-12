@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@600&family=Cinzel:wght@600&family=Monoton&family=Press+Start+2P&family=Caveat:wght@600&display=swap');
 @import "tailwindcss";
 :root {
-  /* font-family: poppins system-ui, Avenir, Helvetica, Arial, sans-serif; */
   font-family: 'Sora', sans-serif;
   line-height: 1.5;
   font-weight: 500;

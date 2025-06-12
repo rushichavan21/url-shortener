@@ -36,14 +36,14 @@ const CenterPart = () => {
 
     try {
       const formattedUrl = longUrl.startsWith('http') ? longUrl : 'https://' + longUrl;
-      let shortUrl;
+      let response;
       if(user){
-        shortUrl =await getShortUrlWithUser(formattedUrl, user?.token);
+         response=await getShortUrlWithUser(formattedUrl, user?.token);
       }else{
 
-        shortUrl =await getShortUrl(formattedUrl);
+        response =await getShortUrl(formattedUrl);
       }
-      setShortUrl(shortUrl);
+      setShortUrl(response.shortUrl);
       showToast("Shortened URL generated!", "success");
     } catch (error) {
       showToast(error.message || "Something went wrong. Please try again.", "error");
