@@ -1,6 +1,6 @@
 import { createRoute } from "@tanstack/react-router"
 import { rootRoute } from "./rootTree"
-import DashboardPage from "../pages/dashboard/dashboardPage"
+import DashboardPage from "../pages/dashboard/DashboardPage"
 import { redirect } from "@tanstack/react-router"
 import CustomPage from "../pages/customPage/CustomPage"
 import RandomCode from "../pages/randomCode/RandomCode"
