@@ -27,3 +27,8 @@ export const saveCustomShortUrl = async (shortUrl, orgUrl, userId) => {
   return newUrl;
 };
 
+export const getAllUrlsDao = async (userId) => {
+  return await url_Schema.find({ user: userId });
+};
+
+
