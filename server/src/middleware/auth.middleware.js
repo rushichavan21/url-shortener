@@ -1,17 +1,27 @@
-import { findUserById } from "../dao/user.dao";
-import { verifyToken } from "../utils/solver";
+import dotenv from "dotenv";
+dotenv.config("./.env");
+import { verifyToken } from "../utils/solver.js";
 
-export const authMiddleware = (req, res, next) => {
-  const tokern=req.cookies.token; 
-    if (!tokern) {  
-    return res.status(401).json({ message: 'Unauthorized' });
-    }
-    try {
-        const decoded = verifyToken(tokern);
-        const user=findUserById(decoded.userId);
-        req.user = user;
-        next();
-    } catch (error) {
-        return res.status(401).json({ message: 'Invalid token' });
-    }
-}
+export const authMiddleware = async (req, res, next) => {
+  const { authorization } = req.headers;
+
+  if (!authorization || !authorization.startsWith("Bearer ")) {
+    return res.status(401).json({ error: "Authorization token required" });
+  }
+  const token = authorization.split(' ')[1];
+  console.log('Authorization header:', authorization);
+
+  try {
+    const decoded = await verifyToken(token);
+    console.log('Decoded JWT:', decoded);
+    req.user = decoded; 
+    next();
+  } catch (error) {
+    console.error('JWT verification error:', error.message);
+    return res.status(401).json({ error: "Request is not authorized" });
+  }
+};
+
+// module.exports = {
+//   authMiddleware,
+// };
