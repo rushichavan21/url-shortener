@@ -9,15 +9,15 @@ const Options = () => {
     <div className="options-container">
       <h1 className="options-title">What would you like to do?</h1>
       <div className="options-blocks">
-        <div className="options-block" onClick={() => navigate({ to: '/custom-url' })}>
+        <div className="options-block" onClick={() => navigate({ to: '/dashboard/custom_url' })}>
           <h2>Create a Custom URL</h2>
           <p>Pick your own short code for the link.</p>
         </div>
-        <div className="options-block" onClick={() => navigate({ to: '/random-url' })}>
+        <div className="options-block" onClick={() => navigate({ to: '/dashboard/random_url' })}>
           <h2>Create URL with Random Code</h2>
           <p>We'll generate a unique short code for you.</p>
         </div>
-        <div className="options-block" onClick={() => navigate({ to: '/my-urls' })}>
+        <div className="options-block" onClick={() => navigate({ to: '/dashboard/view_created' })}>
           <h2>View Your URLs</h2>
           <p>Manage and track your previously shortened URLs.</p>
         </div>
