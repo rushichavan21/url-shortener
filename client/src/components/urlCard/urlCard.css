@@ -58,6 +58,18 @@
           letter-spacing: 0.05em;
         }
 
+        
+        .card-original-url:hover {
+            border-color: #6b7280;
+        }
+        
+        .card-external-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: #9ca3af;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
         .card-original-url {
           display: flex;
           align-items: center;
@@ -65,18 +77,6 @@
           padding: 1rem;
           border: 1px solid #4b5563;
           transition: border-color 0.2s ease;
-        }
-
-        .card-original-url:hover {
-          border-color: #6b7280;
-        }
-
-        .card-external-icon {
-          width: 1.25rem;
-          height: 1.25rem;
-          color: #9ca3af;
-          margin-right: 0.75rem;
-          flex-shrink: 0;
         }
 
         .card-url-text {
@@ -89,7 +89,6 @@
         .card-short-url {
           display: flex;
           align-items: center;
-    
           border-radius: 0.75rem;
           padding: 1rem;
           border: 1px solid rgba(59, 130, 246, 0.5);
@@ -100,13 +99,13 @@
           border-color: rgba(59, 130, 246, 0.7);
         }
 
-        .card-short-text {
+        /* .card-short-text {
           font-size: 1.125rem;
           font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
           color: #93c5fd;
           flex: 1;
           letter-spacing: 0.025em;
-        }
+        } */
 
         .card-copy-button {
           margin-left: 1rem;

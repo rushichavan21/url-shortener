@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Copy, Check, ExternalLink, Calendar } from 'lucide-react';
+const baseURL=import.meta.env.VITE_BACKEND_URL || "http://localhost:3000/";
 import "./UrlCard.css"
 const    UrlCard = ({ data }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(data.shortUrl);
+      await navigator.clipboard.writeText(baseURL+data.shortUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
@@ -58,8 +59,8 @@ const    UrlCard = ({ data }) => {
           <div className="card-section">
             <label className="card-label">Short URL</label>
             <div className="card-short-url">
-              <span className="card-short-text">
-                {data.shortUrl}
+              <span className="card-url-text">
+                {baseURL+data.shortUrl}
               </span>
               <button
                 onClick={handleCopy}
