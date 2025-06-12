@@ -16,7 +16,7 @@ app.use("/api/generate-id",shortUrlRouter);
 app.use("/",shortUrlRouter);
 app.use("/auth",authRouter);
 app.use("/api/",getAllRouter);
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   connectToMongo();
   console.log("Connected to MongoDB");
   console.log("Server is running on http://localhost:3000");
