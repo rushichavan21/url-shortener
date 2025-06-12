@@ -1,7 +1,7 @@
 import { createRoute } from "@tanstack/react-router"
 import { rootRoute } from "./rootTree"
 import LoginPage from "../pages/Login/LoginPage"
-import SignupPage from "../pages/signup/signupPage"
+import SignupPage from "../pages/signup/SignupPage"
 
 export const loginRoute = createRoute({
   getParentRoute: () => rootRoute,
