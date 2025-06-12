@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuthContext } from '../../hooks/useAuthContextHook';
+import { useAuthContext } from '../../hooks/useAuthContextHook.js';
 import { fetchAllUrls } from '../../api/shortUrl.api';
 import { useQuery } from '@tanstack/react-query';
 import UrlCard from '../urlCard/UrlCard';

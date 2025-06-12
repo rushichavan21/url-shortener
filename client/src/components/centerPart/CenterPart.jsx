@@ -2,7 +2,7 @@ import './centerPart.css';
 import React, { useState } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
 import { getShortUrl, getShortUrlWithUser } from '../../api/shortUrl.api';
-import { useAuthContext } from '../../hooks/useAuthContextHook';
+import { useAuthContext } from '../../hooks/useAuthContextHook.js';
 const CenterPart = () => {
   const [longUrl, setLongUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
