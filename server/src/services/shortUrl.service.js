@@ -13,3 +13,10 @@ export const shortUrlserviceWithUser =async(url,user)=>{
  await  saveShortUrl(shortUrl,url,user);
 return shortUrl;
 }
+
+export const shortUrlserviceCustom =async(url,user,customId)=>{
+ let shortUrl = await generateNanoId(0);
+ shortUrl=shortUrl+customId; 
+ await  saveShortUrl(shortUrl,url,user);
+return shortUrl;
+}
