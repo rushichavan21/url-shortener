@@ -26,7 +26,7 @@ const Navbar = () => {
       <div className="navbar-container">
         <div className="navbar-left">
           <div className="navbar-brand">
-            <span className="logo-url"><img src="./logo-url.svg" alt="Logo" /></span>
+            <span className="logo-url"><img src="/logo-url.svg" alt="Logo" /></span>
             <span className="brand-text">Url Shortner</span>
           </div>
           <div className="navbar-links">
