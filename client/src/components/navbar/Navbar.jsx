@@ -30,9 +30,8 @@ const Navbar = () => {
             <span className="brand-text">Url Shortner</span>
           </div>
           <div className="navbar-links">
-            <a href="#">Contact Us</a>
-            <a href="#">Learn</a>
-            <a href="#">How this works?</a>
+            <a href="https://github.com/rushichavan21/url-shortener">Contact Us</a>
+            <a href="https://www.youtube.com/@thisisrushi">Learn how this works?</a>
           </div>
         </div>
 

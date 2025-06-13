@@ -56,7 +56,7 @@ const handleSubmit = async (e) => {
 
   try {
     const response = await loginReq(formData.email, formData.password);
-    console.log(response);
+    // console.log(response);
     
     toast.success("Login successful!",{
       style: {

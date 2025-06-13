@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
 import { getShortUrl, getShortUrlWithUser } from '../../api/shortUrl.api';
 import { useAuthContext } from '../../hooks/useAuthContextHook.js';
+import LoadingSpinner from '../loadingSpinner/LoadingSpinner.jsx';
 const CenterPart = () => {
   const [longUrl, setLongUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
@@ -52,9 +53,7 @@ const CenterPart = () => {
 
   return (
     <section className="center-section">
-
       <Toaster position="bottom-left" />
-
       <div className="center-container">
         <h1 className="center-heading">Shrink it. Share it. Simplify it.</h1>
         <p className="center-subtext">
