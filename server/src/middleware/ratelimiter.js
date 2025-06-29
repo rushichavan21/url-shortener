@@ -1,4 +1,4 @@
-import redisClient from "../cache/redisClient.js"
+import {redisClient} from "../cache/redisClient.js"
 
 const rateLimiter = (limit, windowSeconds) => {
   return async (req, res, next) => {
