@@ -90,7 +90,7 @@ const    UrlCard = ({ data }) => {
               </div>
               <div className="card-clicks">
                 <span className="card-clicks-label">Clicks:</span>
-                <span className="card-clicks-count">0</span>
+                <span className="card-clicks-count">{data.clicks}</span>
               </div>
             </div>
           </div>
