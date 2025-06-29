@@ -8,6 +8,7 @@ const CustomUrl = () => {
   const [customName, setCustomName] = useState(""); 
   const [shortUrl, setShortUrl] = useState("");
   const [copied, setCopied] = useState(false);
+   const [loading, setLoading] = useState(false);
  const { user } = useAuthContext();
   const isValidUrl = (string) => {
     const pattern = /^(https?:\/\/)?([\w\-]+\.)+[\w]{2,}(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/i;
@@ -34,7 +35,7 @@ const handleSubmit = async (e) => {
     return;
   }
 
-
+    setLoading(true); 
   const disallowedPattern = /[^a-zA-Z0-9_-]/;
   if (customName && disallowedPattern.test(customName)) {
     showToast("Custom name can only contain letters, numbers, hyphens (-), and underscores (_).", "error");
@@ -47,8 +48,10 @@ const handleSubmit = async (e) => {
 
     setShortUrl(response.shortUrl); 
     console.log("Shortened URL:", response.shortUrl );
+     setLoading(false); 
     showToast("Shortened URL generated!", "success");
   } catch (error) {
+     setLoading(false); 
      const errMsg = error.response?.data?.message || error.message || "Something went wrong. Please try again.";
   showToast(errMsg, "error");
   }
@@ -82,11 +85,44 @@ const handleSubmit = async (e) => {
             onChange={(e) => setCustomName(e.target.value)}
           />
 
-          <button type="submit" className="arrow-button">
-            <svg className="arrow-icon" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </button>
+           <button type="submit" className="arrow-button" disabled={loading}>
+  {loading ? (
+    <svg
+      className="spinner-icon"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle
+        className="spinner-circle"
+        cx="12"
+        cy="12"
+        r="10"
+        strokeOpacity="0.25"
+      />
+      <path
+        className="spinner-path"
+        d="M22 12a10 10 0 0 1-10 10"
+        strokeOpacity="0.75"
+      />
+    </svg>
+  ) : (
+    <svg
+      className="arrow-icon"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
+    </svg>
+  )}
+</button>
         </form>
 
         {shortUrl && (
