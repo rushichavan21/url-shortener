@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { nanoid } from "nanoid";
+
 import dotenv from "dotenv";
 dotenv.config("./.env");
 import connectToMongo from "./src/config/mongo.config.js";
@@ -8,7 +8,7 @@ import shortUrlRouter from "./src/routes/shortUrl.route.js";
 import authRouter from "./src/routes/auth.route.js";
 import getAllRouter from "./src/routes/getAll.route.js"
 import connectToRedis from './src/cache/redisClient.js';
-import { redisClient } from './src/cache/redisClient.js';
+
 
 const app = express();
 app.use(cors());
