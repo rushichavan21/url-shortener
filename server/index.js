@@ -8,17 +8,17 @@ import shortUrlRouter from "./src/routes/shortUrl.route.js";
 import authRouter from "./src/routes/auth.route.js";
 import getAllRouter from "./src/routes/getAll.route.js"
 import connectToRedis from './src/cache/redisClient.js';
-
+import rateLimiter from "./src/middleware/ratelimiter.js";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/generate-id",shortUrlRouter);
+app.use("/api/generate-id",rateLimiter(10, 60),shortUrlRouter);
 app.use("/",shortUrlRouter);
-app.use("/auth",authRouter);
-app.use("/api/",getAllRouter);
+app.use("/auth",rateLimiter(10, 60),authRouter);
+app.use("/api/",rateLimiter(10, 60),getAllRouter);
 app.listen(process.env.PORT, () => {
   connectToMongo();
   connectToRedis();
