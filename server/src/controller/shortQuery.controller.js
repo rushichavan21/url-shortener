@@ -1,7 +1,4 @@
 
-import { getUrlfromDb,updateClicks } from "../dao/shortQuery.dao.js";
-import { normalizeOriginalUrl } from "../utils/solver.js";
-import { redisClient } from "../cache/redisClient.js";
 import { getUrlfromDb, updateClicks } from "../dao/shortQuery.dao.js";
 import { normalizeOriginalUrl } from "../utils/solver.js";
 import { redisClient } from "../cache/redisClient.js";
