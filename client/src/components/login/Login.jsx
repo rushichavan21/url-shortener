@@ -4,6 +4,7 @@ import { Eye, EyeOff, Lock, Mail, AlertCircle } from 'lucide-react';
 import './login.css';
 import { loginReq } from '../../api/auth.api';
 import { useNavigate } from '@tanstack/react-router';
+import { useAuthContext } from '../../hooks/useAuthContextHook';
 export default function LoginPage() {
   const [formData, setFormData] = useState({
     email: '',
@@ -12,6 +13,7 @@ export default function LoginPage() {
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+    const { dispatch } = useAuthContext();
  const navigate = useNavigate();
  const validateForm = () => {
     const newErrors = {};
@@ -68,10 +70,13 @@ const handleSubmit = async (e) => {
       const user = response?.data?.response?.user;
 
   if (user?.token) {
+
     localStorage.setItem("token", user.token);
     localStorage.setItem("user", JSON.stringify(user));
     console.log("User logged in:", user);
+    dispatch({ type: "LOGIN", payload: user }); 
     navigate({ to: '/dashboard' });
+
   } else {
     console.warn("Login failed or missing token");
   }

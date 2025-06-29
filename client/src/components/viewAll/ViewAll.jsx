@@ -19,7 +19,7 @@ const ViewAll = () => {
   } = useQuery({
     queryKey: ['urls'],
     queryFn: () => fetchAllUrls(user.token),
-    enabled: !!user?.token,
+    enabled: true,
     refetchOnWindowFocus: false, // prevents unnecessary refetches
   });
 
