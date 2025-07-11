@@ -14,6 +14,16 @@ const app = express();
 // app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.get("/health", (req, res) => {
+  res.send("Healthy");
+});
+app.get("/", (req, res) => {
+  const url= process.env.APP_URL;
+  res.send(`
+    <h1>Welcome to URL Shortener API</h1>
+  ${url}
+  `)
+});
 
 app.use("/api/generate-id",rateLimiter(10, 60),shortUrlRouter);
 app.use("/",shortUrlRouter);
