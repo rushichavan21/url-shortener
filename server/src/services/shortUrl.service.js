@@ -2,6 +2,7 @@ import { saveCustomShortUrl, saveShortUrl } from "../dao/shortUrl.dao.js";
 import { generateNanoId } from "../utils/solver.js";
 import { redisClient } from "../cache/redisClient.js";
 const CACHE_EXPIRY = 24 * 60 * 60 * 7;
+// 24 * 60 * 60 * 7 // 7 days
 
 export const shortUrlserviceWithOutUser =async(url)=>{
  const shortUrl = generateNanoId(7); 
