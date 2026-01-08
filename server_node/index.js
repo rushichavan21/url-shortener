@@ -11,7 +11,12 @@ import connectToRedis from './src/cache/redisClient.js';
 import rateLimiter from "./src/middleware/ratelimiter.js";
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: ["https://shawty-url.vercel.app","http://localhost:5173"],
+  credentials: true,
+}));
+
+app.options("*", cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.get("/health", (req, res) => {
