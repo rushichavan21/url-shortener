@@ -11,33 +11,43 @@ import connectToRedis from './src/cache/redisClient.js';
 import rateLimiter from "./src/middleware/ratelimiter.js";
 
 const app = express();
-app.use(cors({
-  origin: ["https://shawty-url.vercel.app","http://localhost:5173"],
-  credentials: true,
-}));
 
+
+const corsOptions = {
+  origin: ["https://shawty-url.vercel.app", "http://localhost:5173"],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  exposedHeaders: ['Content-Range', 'X-Content-Range'],
+  maxAge: 86400, 
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.get("/health", (req, res) => {
   res.send("Healthy");
 });
+
 app.get("/", (req, res) => {
-  const url= process.env.APP_URL;
+  const url = process.env.APP_URL;
   res.send(`
     <h1>Welcome to URL Shortener API</h1>
-  ${url}
-  `)
+    ${url}
+  `);
 });
 
-app.use("/api/generate-id",rateLimiter(10, 60),shortUrlRouter);
-app.use("/",shortUrlRouter);
-app.use("/auth",rateLimiter(10, 60),authRouter);
-app.use("/api/",rateLimiter(10, 60),getAllRouter);
+app.use("/api/generate-id", rateLimiter(10, 60), shortUrlRouter);
+app.use("/", shortUrlRouter);
+app.use("/auth", rateLimiter(10, 60), authRouter);
+app.use("/api/", rateLimiter(10, 60), getAllRouter);
+
 app.listen(process.env.PORT, () => {
   connectToMongo();
   connectToRedis();
   console.log("Connected to MongoDB");
-  console.log("Server is running on http://localhost:3000");
+  console.log(`Server is running on port ${process.env.PORT}`);
 });
-
